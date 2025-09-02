@@ -10,8 +10,9 @@
 	--color-foreground: var(--foreground);
 	--font-sans: var(--font-open-sans);
 	--font-poppins: var(--font-poppins);
-	--color-accent: #50806b;
+	--color-primary: #50806b;
 	--color-secondary: #979797;
+	--color-accent: #e8edde;
 }
 
 body {

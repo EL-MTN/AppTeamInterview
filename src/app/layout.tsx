@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Open_Sans, Poppins } from 'next/font/google';
 import './globals.css';
+import Header from '@/components/Header';
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
+const poppins = Poppins({
+	weight: '500',
+	variable: '--font-poppins',
 	subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
+const openSans = Open_Sans({
+	variable: '--font-open-sans',
 	subsets: ['latin'],
 });
 
@@ -24,9 +26,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
+			<body className={`${openSans.variable} ${poppins.variable} antialiased`}>
+				<Header />
 				{children}
 			</body>
 		</html>

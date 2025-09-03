@@ -14,7 +14,7 @@ export default function Header() {
 				</div>
 			</div>
 			{/* NAV */}
-			<div className="p-4 font-sans flex items-center justify-between shadow-xl relative">
+			<div className="p-4 font-sans flex items-center justify-between shadow-lg relative">
 				<div className="font-poppins text-xl font-semibold ml-4">
 					<span className="text-primary">Green</span>&nbsp;Thumb
 				</div>

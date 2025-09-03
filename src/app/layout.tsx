@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Open_Sans, Poppins } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const poppins = Poppins({
 	weight: '400',
@@ -29,6 +30,7 @@ export default function RootLayout({
 			<body className={`${openSans.variable} ${poppins.variable} antialiased`}>
 				<Header />
 				{children}
+				<Footer />
 			</body>
 		</html>
 	);

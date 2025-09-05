@@ -22,13 +22,15 @@ export default function Home() {
 	const [totalPages, setTotalPages] = useState(1);
 	const [totalPlants, setTotalPlants] = useState(0);
 	const [loading, setLoading] = useState(true);
+	const [sortOrder, setSortOrder] = useState('');
 
 	useEffect(() => {
 		const fetchPlants = async () => {
 			setLoading(true);
 			try {
+				const orderParam = sortOrder ? `&order=${sortOrder}` : '';
 				const response = await fetch(
-					`/api/plants?page=${currentPage}&per_page=9`
+					`/api/plants?page=${currentPage}&per_page=9${orderParam}`
 				);
 				if (!response.ok) {
 					throw new Error('Failed to fetch plants');
@@ -46,11 +48,16 @@ export default function Home() {
 		};
 
 		fetchPlants();
-	}, [currentPage]);
+	}, [currentPage, sortOrder]);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
 		window.scrollTo({ top: 0, behavior: 'smooth' });
+	};
+
+	const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setSortOrder(event.target.value);
+		setCurrentPage(1); // Reset to first page when sorting changes
 	};
 
 	const startIndex = (currentPage - 1) * 9 + 1;
@@ -75,10 +82,15 @@ export default function Home() {
 							)}
 						</div>
 						<div className="flex items-center gap-4">
-							<select className="border border-gray-300 rounded px-3 py-1 text-sm">
-								<option>Popular</option>
-								<option>Price: Low to High</option>
-								<option>Price: High to Low</option>
+							<label className="text-sm text-gray-600">Sort by:</label>
+							<select 
+								className="border border-gray-300 rounded px-3 py-1 text-sm"
+								value={sortOrder}
+								onChange={handleSortChange}
+							>
+								<option value="">Default</option>
+								<option value="asc">Name: A to Z</option>
+								<option value="desc">Name: Z to A</option>
 							</select>
 						</div>
 					</div>

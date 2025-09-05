@@ -3,6 +3,8 @@ import { Open_Sans, Poppins } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { CartProvider } from '@/context/CartContext';
+import CartDrawer from '@/components/CartDrawer';
 
 const poppins = Poppins({
 	weight: '400',
@@ -28,9 +30,12 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${openSans.variable} ${poppins.variable} antialiased`}>
-				<Header />
-				{children}
-				<Footer />
+				<CartProvider>
+					<Header />
+					{children}
+					<Footer />
+					<CartDrawer />
+				</CartProvider>
 			</body>
 		</html>
 	);

@@ -73,7 +73,12 @@ export default async function Plant({ params }: PlantPageProps) {
 								`LOREM IPSUM NO DESCRIPTION`}
 						</p>
 
-						<ProductInteractions />
+						<ProductInteractions 
+							plantId={plantDetails.id}
+							plantName={plantDetails.common_name}
+							plantImage={plantDetails.default_image?.regular_url || '/placeholder-plant.jpg'}
+							price={350}
+						/>
 
 						<p className="text-sm text-gray-500">Free standard shipping</p>
 					</div>

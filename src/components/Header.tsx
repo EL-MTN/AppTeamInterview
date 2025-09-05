@@ -1,6 +1,12 @@
+'use client';
+
 import { Handbag, Search } from 'lucide-react';
+import { useCartContext } from '@/context/CartContext';
+import Link from 'next/link';
 
 export default function Header() {
+	const { cart, setIsCartOpen } = useCartContext();
+
 	return (
 		<div>
 			{/* HEADER */}
@@ -19,10 +25,10 @@ export default function Header() {
 					<span className="text-primary">Green</span>&nbsp;Thumb
 				</div>
 				<div className="absolute left-1/2 transform -translate-x-1/2 flex gap-16">
-					<div>Home</div>
-					<div>Product</div>
-					<div>About Us</div>
-					<div>Contact Us</div>
+					<Link href="/">Home</Link>
+					<Link href="/">Product</Link>
+					<Link href="/about">About Us</Link>
+					<Link href="/contact">Contact Us</Link>
 				</div>
 				<div className="flex mr-4 gap-4 items-center">
 					<div className="flex items-center gap-2 text-secondary">
@@ -30,9 +36,13 @@ export default function Header() {
 						<Search className='text-black h-[22px] w-[22px]' />
 					</div>
 					<div className="h-8 w-px bg-secondary"></div>
-					<div className="flex items-center gap-2">
-						<Handbag />2
-					</div>
+					<button 
+						className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"
+						onClick={() => setIsCartOpen(true)}
+					>
+						<Handbag />
+						<span>{cart.itemCount}</span>
+					</button>
 				</div>
 			</div>
 		</div>

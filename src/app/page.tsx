@@ -1,11 +1,13 @@
 import PlantCard from '@/components/PlantCard';
-import { getAllPlants } from '@/lib/perenual';
+import { getPaginatedPlants } from '@/lib/perenual';
 import { ArrowRight, Leaf, Truck, Shield, Sun } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Home() {
-	const { data: plants } = await getAllPlants();
-	const featuredPlants = plants.slice(0, 4);
+	const { data: featuredPlants } = await getPaginatedPlants({ 
+		clientPage: 1, 
+		perPage: 4 
+	});
 
 	return (
 		<div>

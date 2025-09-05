@@ -2,7 +2,7 @@ import CareInformation from '@/components/CareInformation';
 import Hero from '@/components/Hero';
 import PlantCard from '@/components/PlantCard';
 import ProductInteractions from '@/components/ProductInteractions';
-import { getAllPlants, getGuideById, getPlantById } from '@/lib/perenual';
+import { getPaginatedPlants, getGuideById, getPlantById } from '@/lib/perenual';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,11 +15,15 @@ export default async function Plant({ params }: PlantPageProps) {
 	const { id } = await params;
 
 	// Fetch all data server-side
-	const [plantDetails, careGuidesResponse, allPlantsResponse] =
-		await Promise.all([getPlantById(id), getGuideById(id), getAllPlants()]);
+	const [plantDetails, careGuidesResponse, relatedPlantsResponse] =
+		await Promise.all([
+			getPlantById(id), 
+			getGuideById(id), 
+			getPaginatedPlants({ clientPage: 1, perPage: 4 })
+		]);
 
 	const careGuides = careGuidesResponse.data[0] || {};
-	const relatedPlants = allPlantsResponse.data.slice(0, 4);
+	const relatedPlants = relatedPlantsResponse.data;
 
 	return (
 		<div>

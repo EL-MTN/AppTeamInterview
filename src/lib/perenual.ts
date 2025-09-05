@@ -12,7 +12,7 @@ interface Plant {
 export async function getAllPlants(): Promise<{ data: Plant[] }> {
 	// TODO: DISABLE REVALIDATION FOR PRODUCTION
 	const response = await fetch(
-		`https://perenual.com/api/v2/species-list?key=${key}`,
+		`https://perenual.com/api/v2/species-list?key=${key}&per_page=30`,
 		{ next: { revalidate: 3600 } }
 	);
 	if (!response.ok) {

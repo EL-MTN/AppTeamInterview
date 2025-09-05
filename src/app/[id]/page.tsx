@@ -1,10 +1,11 @@
-import Hero from '@/components/Hero';
 import CareInformation from '@/components/CareInformation';
+import Hero from '@/components/Hero';
+import PlantCard from '@/components/PlantCard';
 import ProductInteractions from '@/components/ProductInteractions';
-import { getGuideById, getPlantById, getAllPlants } from '@/lib/perenual';
+import { getAllPlants, getGuideById, getPlantById } from '@/lib/perenual';
 import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface PlantPageProps {
 	params: Promise<{ id: string }>;
@@ -96,49 +97,9 @@ export default async function Plant({ params }: PlantPageProps) {
 				<hr className='m-8 mx-0' />
 
 				<div className="grid grid-cols-4 gap-6">
-					{relatedPlants.map(
-						(plant: {
-							id: number;
-							common_name: string;
-							default_image?: { regular_url: string };
-						}) => (
-							<div key={plant.id} className="bg-white rounded-lg shadow-lg">
-								{/* Product Image */}
-								<div className="flex items-center justify-center p-4 pb-0">
-									<div
-										style={{
-											width: '250px',
-											height: '175px',
-											overflow: 'hidden',
-											borderRadius: 8,
-										}}
-									>
-										<Image
-											src={
-												plant.default_image
-													? plant.default_image.regular_url
-													: 'https://picsum.photos/250/175'
-											}
-											alt={plant.common_name}
-											width={250}
-											height={175}
-										/>
-									</div>
-								</div>
-
-								{/* Product Info */}
-								<div className="p-4">
-									<h3 className="font-bold">{plant.common_name}</h3>
-									<div className="text-lg mb-2">$ {350}</div>
-									<Link href={`/${plant.id}`}>
-										<button className="w-full bg-primary text-white p-4 rounded-lg font-bold cursor-pointer">
-											Buy
-										</button>
-									</Link>
-								</div>
-							</div>
-						)
-					)}
+					{relatedPlants.map((plant) => (
+						<PlantCard key={plant.id} plant={plant} />
+					))}
 				</div>
 			</div>
 		</div>

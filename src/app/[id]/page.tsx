@@ -27,9 +27,9 @@ export default async function Plant({ params }: PlantPageProps) {
 
 			{/* Main Product Section */}
 			<div className="py-16 px-18">
-				{/* Back to Search */}
+				{/* Back to Products */}
 				<Link
-					href="/"
+					href="/products"
 					className="flex items-center gap-2 text-secondary mb-8 hover:text-primary transition-colors"
 				>
 					<ArrowLeft className="w-4 h-4" />

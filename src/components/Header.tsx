@@ -26,7 +26,7 @@ export default function Header() {
 				</div>
 				<div className="absolute left-1/2 transform -translate-x-1/2 flex gap-16">
 					<Link href="/">Home</Link>
-					<Link href="/">Product</Link>
+					<Link href="/products">Product</Link>
 					<Link href="/about">About Us</Link>
 					<Link href="/contact">Contact Us</Link>
 				</div>

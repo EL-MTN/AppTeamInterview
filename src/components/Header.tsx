@@ -3,9 +3,50 @@
 import { Handbag, Search } from 'lucide-react';
 import { useCartContext } from '@/context/CartContext';
 import Link from 'next/link';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
 	const { cart, setIsCartOpen } = useCartContext();
+	const [searchQuery, setSearchQuery] = useState('');
+	const router = useRouter();
+	const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+
+	// Debounced search effect
+	useEffect(() => {
+		// Clear any existing timer
+		if (debounceTimer.current) {
+			clearTimeout(debounceTimer.current);
+		}
+
+		// Set up new timer for debounced search
+		if (searchQuery.trim()) {
+			debounceTimer.current = setTimeout(() => {
+				router.push(
+					`/products?search=${encodeURIComponent(searchQuery.trim())}`
+				);
+			}, 500);
+		}
+
+		// Cleanup function
+		return () => {
+			if (debounceTimer.current) {
+				clearTimeout(debounceTimer.current);
+			}
+		};
+	}, [searchQuery, router]);
+
+	const handleSearch = (e: React.FormEvent) => {
+		e.preventDefault();
+		// Clear any pending debounce timer
+		if (debounceTimer.current) {
+			clearTimeout(debounceTimer.current);
+		}
+		// Navigate immediately on form submit
+		if (searchQuery.trim()) {
+			router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+		}
+	};
 
 	return (
 		<div>
@@ -31,13 +72,25 @@ export default function Header() {
 					<Link href="/contact">Contact Us</Link>
 				</div>
 				<div className="flex mr-4 gap-4 items-center">
-					<div className="flex items-center gap-2 text-secondary">
-						Search
-						<Search className='text-black h-[22px] w-[22px]' />
-					</div>
+					<form
+						onSubmit={handleSearch}
+						className="flex items-center rounded"
+					>
+						<input
+							type="text"
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+							placeholder="Search"
+							className="bg-transparent px-3 py-1 text-sm w-48 focus:outline-none"
+							style={{ textAlign: 'right' }}
+						/>
+						<button type="submit" className="px-2 py-1 rounded-r">
+							<Search />
+						</button>
+					</form>
 					<div className="h-8 w-px bg-secondary"></div>
-					<button 
-						className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"
+					<button
+						className="flex items-center gap-2 cursor-pointer"
 						onClick={() => setIsCartOpen(true)}
 					>
 						<Handbag />

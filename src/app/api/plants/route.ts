@@ -10,6 +10,7 @@ export async function GET(request: Request) {
 		const clientPage = parseInt(searchParams.get('page') || '1');
 		const perPage = parseInt(searchParams.get('per_page') || '9');
 		const order = searchParams.get('order') || ''; // 'asc' or 'desc' for alphabetical sorting
+		const query = searchParams.get('q') || ''; // Search query
 
 		// Calculate the range of items we need
 		const startIndex = (clientPage - 1) * perPage;
@@ -26,8 +27,9 @@ export async function GET(request: Request) {
 		// TODO: Disable caching on production
 		for (let page = startPerenualPage; page <= endPerenualPage; page++) {
 			const orderParam = order ? `&order=${order}` : '';
+			const queryParam = query ? `&q=${encodeURIComponent(query)}` : '';
 			const response = await fetch(
-				`https://perenual.com/api/v2/species-list?key=${PERENUAL_API_KEY}&page=${page}${orderParam}`,
+				`https://perenual.com/api/v2/species-list?key=${PERENUAL_API_KEY}&page=${page}${orderParam}${queryParam}`,
 				{ next: { revalidate: 3600 } }
 			);
 

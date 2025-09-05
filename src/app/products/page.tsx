@@ -6,6 +6,8 @@ import PlantCard from '@/components/PlantCard';
 import PlantGridSkeleton from '@/components/PlantGridSkeleton';
 import PaginationControls from '@/components/PaginationControls';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface Plant {
 	id: number;
@@ -17,6 +19,9 @@ interface Plant {
 }
 
 export default function Home() {
+	const searchParams = useSearchParams();
+	const searchQuery = searchParams.get('search') || '';
+	
 	const [plants, setPlants] = useState<Plant[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
@@ -25,12 +30,17 @@ export default function Home() {
 	const [sortOrder, setSortOrder] = useState('');
 
 	useEffect(() => {
+		setCurrentPage(1); // Reset to page 1 when search changes
+	}, [searchQuery]);
+
+	useEffect(() => {
 		const fetchPlants = async () => {
 			setLoading(true);
 			try {
 				const orderParam = sortOrder ? `&order=${sortOrder}` : '';
+				const searchParam = searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : '';
 				const response = await fetch(
-					`/api/plants?page=${currentPage}&per_page=9${orderParam}`
+					`/api/plants?page=${currentPage}&per_page=9${orderParam}${searchParam}`
 				);
 				if (!response.ok) {
 					throw new Error('Failed to fetch plants');
@@ -48,7 +58,7 @@ export default function Home() {
 		};
 
 		fetchPlants();
-	}, [currentPage, sortOrder]);
+	}, [currentPage, sortOrder, searchQuery]);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
@@ -72,12 +82,30 @@ export default function Home() {
 
 				{/* Main Content */}
 				<div className="flex-1">
+					{/* Search Results Banner */}
+					{searchQuery && (
+						<div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+							<div className="flex justify-between items-center">
+								<p className="text-green-800">
+									Searching for: <strong>&quot;{searchQuery}&quot;</strong>
+									{!loading && ` - Found ${totalPlants} results`}
+								</p>
+								<Link 
+									href="/products"
+									className="text-sm text-green-600 hover:text-green-800 underline"
+								>
+									Clear search
+								</Link>
+							</div>
+						</div>
+					)}
+					
 					{/* Header */}
 					<div className="flex justify-between items-center mb-6">
 						<div className="text-gray-600">
 							{totalPlants > 0 && (
 								<>
-									Showing {startIndex}-{endIndex} of {totalPlants} Products
+									Showing {startIndex}-{endIndex} of {totalPlants} {searchQuery ? 'Results' : 'Products'}
 								</>
 							)}
 						</div>

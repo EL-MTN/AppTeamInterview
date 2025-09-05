@@ -44,7 +44,7 @@ export default function Contact() {
 							<h2 className="text-3xl font-bold mb-6">Get in Touch</h2>
 							<p className="text-gray-600 mb-8">
 								Have a question about plant care? Need help choosing the perfect plant? 
-								Or just want to say hello? Drop us a message and we'll get back to you within 24 hours.
+								Or just want to say hello? Drop us a message and we&apos;ll get back to you within 24 hours.
 							</p>
 							
 							<form onSubmit={handleSubmit} className="space-y-6">
@@ -212,10 +212,10 @@ export default function Contact() {
 								</p>
 							</div>
 							<div>
-								<h3 className="font-semibold mb-2">What's your return policy?</h3>
+								<h3 className="font-semibold mb-2">What&apos;s your return policy?</h3>
 								<p className="text-gray-600">
-									We offer a 30-day health guarantee on all plants. If your plant isn't thriving, 
-									we'll replace it or provide a full refund.
+									We offer a 30-day health guarantee on all plants. If your plant isn&apos;t thriving, 
+									we&apos;ll replace it or provide a full refund.
 								</p>
 							</div>
 							<div>
@@ -229,7 +229,7 @@ export default function Contact() {
 								<h3 className="font-semibold mb-2">Can I schedule a delivery?</h3>
 								<p className="text-gray-600">
 									Absolutely! You can choose your preferred delivery date at checkout, 
-									and we'll make sure your plants arrive when you're ready.
+									and we&apos;ll make sure your plants arrive when you&apos;re ready.
 								</p>
 							</div>
 						</div>

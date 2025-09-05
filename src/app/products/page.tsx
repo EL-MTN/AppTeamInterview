@@ -5,7 +5,7 @@ import FilterSidebar from '@/components/FilterSidebar';
 import PlantCard from '@/components/PlantCard';
 import PlantGridSkeleton from '@/components/PlantGridSkeleton';
 import PaginationControls from '@/components/PaginationControls';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -18,7 +18,7 @@ interface Plant {
 	};
 }
 
-export default function Home() {
+function ProductsContent() {
 	const searchParams = useSearchParams();
 	const searchQuery = searchParams.get('search') || '';
 	
@@ -143,5 +143,13 @@ export default function Home() {
 				</div>
 			</div>
 		</div>
+	);
+}
+
+export default function Home() {
+	return (
+		<Suspense fallback={<PlantGridSkeleton />}>
+			<ProductsContent />
+		</Suspense>
 	);
 }

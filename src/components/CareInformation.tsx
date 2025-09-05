@@ -96,35 +96,57 @@ export default function CareInformation({
 				</div>
 
 				{/* Content Area */}
-				<div className="flex-1">
+				<div className="flex-1 relative">
 					{/* Dynamic Care Guide Content */}
-					{careGuideSections.map(
-						(section) =>
-							activeSection === section.type && (
-								<div key={section.id}>
-									<h2 className="text-3xl font-bold font-poppins mb-4">
-										{section.type.charAt(0).toUpperCase() +
-											section.type.slice(1)}
-									</h2>
-									<div className="space-y-4 text-black leading-relaxed">
-										<p>{section.description}</p>
-									</div>
-								</div>
-							)
-					)}
+					{careGuideSections.map((section) => (
+						<div
+							key={section.id}
+							className={`absolute inset-0 transition-all duration-300 ease-in-out ${
+								activeSection === section.type
+									? 'opacity-100 translate-x-0'
+									: 'opacity-0 translate-x-4 pointer-events-none'
+							}`}
+						>
+							<h2 className="text-3xl font-bold font-poppins mb-4">
+								{section.type.charAt(0).toUpperCase() +
+									section.type.slice(1)}
+							</h2>
+							<div className="space-y-4 text-black leading-relaxed">
+								<p>{section.description}</p>
+							</div>
+						</div>
+					))}
 					{/* Origin Story */}
-					{activeSection === 'originStory' && (
+					<div
+						className={`absolute inset-0 transition-all duration-300 ease-in-out ${
+							activeSection === 'originStory'
+								? 'opacity-100 translate-x-0'
+								: 'opacity-0 translate-x-4 pointer-events-none'
+						}`}
+					>
+						<h2 className="text-3xl font-bold font-poppins mb-4">
+							Origin Story
+						</h2>
 						<div className="space-y-4 text-black leading-relaxed">
 							Origin story here
 						</div>
-					)}
+					</div>
 
 					{/* Scientific Data */}
-					{activeSection === 'scientificData' && (
+					<div
+						className={`absolute inset-0 transition-all duration-300 ease-in-out ${
+							activeSection === 'scientificData'
+								? 'opacity-100 translate-x-0'
+								: 'opacity-0 translate-x-4 pointer-events-none'
+						}`}
+					>
+						<h2 className="text-3xl font-bold font-poppins mb-4">
+							Scientific Data
+						</h2>
 						<div className="space-y-4 text-black leading-relaxed">
 							Scientific data here
 						</div>
-					)}
+					</div>
 				</div>
 			</div>
 		</div>

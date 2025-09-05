@@ -8,19 +8,20 @@ export default function CartDrawer() {
 	const { cart, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart } =
 		useCartContext();
 
-	if (!isCartOpen) return null;
-
 	return (
 		<>
 			{/* Overlay */}
 			<div
-				className="fixed inset-0 z-40 transition-opacity duration-300"
-				style={{ backgroundColor: '#333E34CC' }}
+				className={`fixed inset-0 z-40 bg-[#333E34CC] transition-opacity duration-300 ${
+					isCartOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+				}`}
 				onClick={() => setIsCartOpen(false)}
 			/>
 
 			{/* Drawer */}
-			<div className="fixed right-0 top-0 h-full w-[800px] bg-white z-50 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out border-l-2 border-gray-300">
+			<div className={`fixed right-0 top-0 h-full w-[800px] bg-white z-50 shadow-2xl flex flex-col border-l-2 border-gray-300 transform transition-transform duration-300 ease-out ${
+				isCartOpen ? 'translate-x-0' : 'translate-x-full'
+			}`}>
 				{/* Header */}
 				<div className="flex items-center justify-between p-4 border-b">
 					<h2 className="text-xl font-semibold">My Cart</h2>
